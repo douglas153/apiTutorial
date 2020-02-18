@@ -1,0 +1,80 @@
+10 
+27
+45
+37
+1
+2
+23
+
+
+<template>
+    <div>
+        <awm-page-title
+            id="title"
+            page-title="Componentes">
+            <!-- <v-btn
+                icon
+                @click="showGridLayout">
+                <v-icon 
+                    color="primary" 
+                    size="35"> 
+                    mdi-view-module
+                </v-icon>
+            </v-btn> -->
+        </awm-page-title>
+
+        <div
+            id="awm-process-list"
+            :style="activeFlex">
+            <process-item
+                v-for="(process) in processListByUser"
+                :key="process.name"
+                :process="process"
+                :grid="isGrid" />
+        </div>
+        <workflow-image-dialog  
+            image="" />
+    </div>
+</template>
+
+<script>
+import WorkflowImageDialog from '@/components/dialogs/WorkflowImageDialog.vue'
+import ProcessItem from '@/components/process/ProcessItem'
+import ListProcessByUserMixin from '@/mixins/process/ListProcessByUserMixin'
+import { mapActions, mapState } from 'vuex'
+import AwmPageTitle from "@/components/base/AwmPageTitle";
+
+export default {
+    data() {
+        return {
+            grid: false,
+            userData: {
+                processUserIndividualRegisterDoc: "24100056000186",
+                companyId: "5deac798bc1aa8245827e636",
+                processUserEmail: "teste@compline.com.br",
+            }
+        }
+    },
+    mixins: [ListProcessByUserMixin],
+    computed:{
+        ...mapState('process', [
+            'processListByUser'
+        ]),
+        ...mapState('subHeaders', [
+            'isGrid'
+        ]),
+        activeFlex(){
+            if(this.grid){
+                return 'display:flex; flex-wrap: wrap; position:relative;'
+            }else{
+                return ''
+            }
+        }
+    },
+    components: {
+        'process-item':ProcessItem,
+        'workflow-image-dialog':WorkflowImageDialog,
+        "awm-page-title": AwmPageTitle,
+    },
+}
+</script>
