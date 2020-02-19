@@ -14,7 +14,9 @@ mongoose.connect('mongodb+srv://node-shop:'+ process.env.MONGO_ATLAS_PW +'@node-
 {
     useNewUrlParser: true
 }
-)
+);
+mongoose.Promise = global.Promise;
+
 app.use('/products', productRoutes);
 app.use('/orders', ordersRoutes);
 
