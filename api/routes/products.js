@@ -15,6 +15,7 @@ router.get('/', (req, res, next) => {
                 return {
                     name: doc.name, 
                     price: doc.price, 
+                    _id: doc._id,
                     request: {
                         type: 'GET', 
                         url: 'http://localhost:3000/products/'+doc._id 
@@ -114,22 +115,7 @@ router.patch('/:productId', (req, res, next) => {
     })
     ;
 })
-router.delete('/:productId', (req, res, next) => {
-   const id = req.params.productId; 
-   Product.remove({_id: id})
-   .exec()
-   .then(result => {
-       res.status(200).json({
-           message: 'Product deleted'
-       });
-   })
-   .catch(err => {
-       res.status(500).json({
-           error: err
-       });
-   })
-    
-})
+
 
 
 module.exports = router;
